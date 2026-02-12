@@ -1,0 +1,8 @@
+## Interface: 50501
+## Title: RuneBarMoP
+## Author: enjoymygripz
+## Notes: Simple adjustable Rune bar for Death Knights in MoP Classic.
+## Version: 1.1
+## SavedVariables: RuneBarMoPDB
+
+RuneBarMoP.lua 

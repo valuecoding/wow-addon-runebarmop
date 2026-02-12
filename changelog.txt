@@ -1,0 +1,148 @@
+# RuneBarMoP Changelog
+
+## Version 2.0.1
+**Patch Compatibility & UI Fixes:**
+
+**Updates:**
+- **Patch 5.5.1 Compatibility**: Updated Interface version from 50500 to 50501 for MoP Classic Patch 5.5.1
+- **Rune Order Customization**: Changed rune display order to Blood, Blood, Frost, Frost, Unholy, Unholy
+  - Corrected cooldown mapping to match actual rune positions
+  - Fixed issues with Frost spells showing incorrect rune cooldowns
+- **Death Rune Support**: Added logic to properly display Death Runes when they appear
+  - Death Runes now show correctly while maintaining custom order for standard runes
+- **World Map Integration**: Runic Power text now hides when the World Map is opened
+  - Prevents UI clutter during map navigation
+  - Uses secure hooks for reliable detection
+
+**Technical Improvements:**
+- Improved rune cooldown handling with proper position mapping
+- Enhanced event system for better UI responsiveness
+- Maintained backward compatibility with existing settings
+
+---
+
+## Version 2.0.0
+**Major Feature Update:**
+
+**New Features:**
+- **Separate Opacity Controls**: Complete rework of opacity system with independent controls
+  - **OOC Opacity**: Adjustable transparency when out of combat (0.1-1.0)
+  - **In-Combat Opacity**: Separate opacity control for combat situations (0.1-1.0)
+  - **RP Zero Opacity**: Special opacity when Runic Power is at 0 (0.1-1.0)
+  - All opacity controls work independently for maximum customization
+
+- **Optional Runic Power Bar**: Toggleable RP bar below the rune bar
+  - **Show Runic Power Bar**: Toggle to enable/disable the RP bar
+  - **RP Bar Opacity**: Independent opacity control for the RP bar (0.1-1.0)
+  - Scales automatically with rune bar size and positioning
+  - Completely independent alpha from rune bar (no inheritance)
+
+- **Runic Power Text Display**: Centered numerical display on the rune bar
+  - **Show RP Text**: Toggle to show current RP as number (e.g. "45")
+  - Dynamically positioned on RP bar (if visible) or centered on rune bar
+  - Auto-scaling font size based on bar scale
+  - High z-order overlay to ensure visibility over runes
+
+- **Localization Support**: Full German/English localization
+  - Automatic detection of deDE client for German interface
+  - All UI elements, tooltips, and labels properly localized
+  - Consistent terminology across both languages
+
+**UX Improvements:**
+- **Enhanced Settings Panel**: Completely redesigned options GUI
+  - Increased panel size (560x600) to accommodate all new controls
+  - Proper spacing and positioning to prevent element overlap
+  - Drag without Shift requirement for easier repositioning
+  - All controls remain inside panel boundaries
+  - Settings panel allows game movement/actions while open
+
+- **Smart Visibility Logic**: Refined hide-out-of-combat behavior
+  - Bar properly hides OOC when enabled, regardless of RP changes
+  - Settings panel always shows bar for testing/positioning
+  - No more flickering or unexpected visibility changes
+  - RP bar and text respect main bar visibility rules
+
+**Technical Improvements:**
+- **Separated Alpha Systems**: Rune bar and RP bar have completely independent alpha
+  - RP bar parented to UIParent to prevent alpha inheritance
+  - Dedicated positioning and update functions for each component
+  - Clean separation of concerns between rune display and RP display
+
+- **Robust Event Handling**: Improved event system for better performance
+  - Proper UNIT_POWER_UPDATE handling without triggering unwanted visibility changes
+  - Enhanced combat state detection and response
+  - Optimized update cycles to prevent unnecessary recalculations
+
+- **Defensive Programming**: Added extensive nil checks and error handling
+  - Protection against API returning nil values from GetRuneCooldown
+  - Safe handling of missing database values with proper defaults
+  - Graceful degradation when optional components are disabled
+
+**Bug Fixes:**
+- Fixed OOC hiding being bypassed by RP power changes (Horn of Winter, etc.)
+- Fixed RP text toggle not working correctly
+- Fixed bar appearing "thin" on initial login before opening settings
+- Fixed alpha inheritance issues between rune bar and RP bar components
+- Fixed settings panel element overflow in German localization
+- Fixed nil comparison errors in cooldown calculations
+
+---
+
+## Version 1.1.1
+**Bug Fixes:**
+- **UpdateVisibility Nil Error**: Resolved Lua error "attempt to call upvalue 'UpdateVisibility' (a nil value)" that occurred on login in v1.1.0.
+  - Added proper forward declaration and refactored function definition to ensure visibility logic initializes correctly.
+
+## Version 1.1.0
+**New Features:**
+- **Lock/Unlock System**: Added ability to lock the bar to prevent mouse interaction
+  - Use `/runebar lock` to disable mouse clicks (bar becomes click-through)
+  - Use `/runebar unlock` to enable dragging again
+  - GUI checkbox: "Lock Bar (disable mouse)"
+  - Perfect for positioning the bar anywhere without losing mouse-turn when clicking in its area
+
+- **Hide Out-of-Combat Option**: Bar can now automatically hide when not in combat
+  - Use `/runebar hideooc on` to enable hiding when out of combat
+  - Use `/runebar hideooc off` to disable (always visible)
+  - GUI checkbox: "Hide when Out of Combat"
+  - Great for keeping UI clean during exploration/downtime
+
+**Bug Fixes:**
+- **Fixed Critical Error on Non-DK Characters**: Resolved "attempt to compare number with nil" error that occurred when logging into non-Death Knight characters
+  - Added proper class checking before attempting to access rune data
+  - Bar now gracefully handles character switching without throwing errors
+
+**Improvements:**
+- **Enhanced GUI**: Redesigned options panel for better usability
+  - Larger panel size (380x280) to prevent text overlap
+  - Left-aligned checkboxes with proper spacing
+  - Improved instruction text positioning to avoid button overlap
+  - All options now clearly visible without clipping
+  - **Settings UX**: Bar now always stays visible while the settings window is open, even when toggling the "Hide when Out of Combat" checkbox – no more disappearing during combat
+
+- **Expanded Slash Commands**: Updated help text with all available commands
+  - `/runebar` - Open settings GUI
+  - `/runebar scale <number>` - Set bar scale
+  - `/runebar lock/unlock` - Toggle mouse interaction
+  - `/runebar hideooc on/off` - Toggle out-of-combat hiding
+
+**Technical:**
+- Added combat state event handling (PLAYER_REGEN_DISABLED/ENABLED)
+- Improved database initialization with new default values
+- Enhanced visibility and interactivity update functions
+- Better error handling for non-Death Knight characters
+- Cleaner code structure with proper function separation
+- **Hide OOC Fix**: Changed from `InCombatLockdown()` to `UnitAffectingCombat()` and added additional visibility update in `UpdateRunes` to ensure the bar reliably appears in combat
+
+---
+
+## Version 1.0.0
+- Initial release
+- Basic rune bar functionality for Death Knights
+- Draggable interface with Shift+drag
+- Scale adjustment via slider and commands
+- Death Knight themed UI with red accents
+
+---
+
+*Thanks to the community feedback that made these improvements possible!*
