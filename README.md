@@ -1,10 +1,11 @@
-# RuneBarMoP
+﻿# RuneBarMoP
 
 Simple adjustable Rune bar for Death Knights in MoP Classic.
 
 ## Information
 
 - **Version:** 1.1
+- **Author:** enjoymygripz
 - **CurseForge:** https://www.curseforge.com/wow/addons/runebarmop
 
 ## Installation
@@ -15,4 +16,4 @@ Simple adjustable Rune bar for Death Knights in MoP Classic.
 
 ## License
 
-See LICENSE file for details.
+See license/LICENSE file if present, otherwise All Rights Reserved by the author.
